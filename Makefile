@@ -3,7 +3,7 @@ LD := i686-elf-ld
 
 LDFLAGS := -T linker.ld
 
-OBJS := bin/boot.o
+OBJS := bin/boot.o bin/main.o
 
 all: $(OBJS)
 	@mkdir -p bin
