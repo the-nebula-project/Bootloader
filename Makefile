@@ -1,7 +1,8 @@
-AS := i686-elf-as
+AS := i686-elf-gcc
 LD := i686-elf-ld
 
 LDFLAGS := -T linker.ld
+ASFLAGS := -x assembler-with-cpp
 
 OBJS := bin/boot.o bin/main.o
 
@@ -13,4 +14,4 @@ all: $(OBJS)
 	@dd if=bin/boot.bin of=boot.img conv=notrunc
 
 bin/%.o: src/%.s
-	$(AS) $< -o $@
+	$(AS) $(ASFLAGS) -c $< -o $@

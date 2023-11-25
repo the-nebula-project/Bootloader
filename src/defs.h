@@ -9,5 +9,11 @@
 #define REALMODE_STACK          (SECOND_STAGE + SECOND_STAGE_SECTORS * SECTOR_SIZE)
 #define STACK_SECTORS           0x4
 #define STACK_SIZE              (STACK_SECTORS * SECTOR_SIZE)
+#define STACK_END               (REALMODE_STACK + STACK_SIZE)
+
+#define CONFIG_DISK             (2 + SECOND_STAGE_SECTORS)
+#define CONFIG                  STACK_END
+
+#include "config_defs.h"
 
 #endif

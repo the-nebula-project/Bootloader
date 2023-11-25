@@ -1,5 +1,7 @@
 .code16
 
+#include "defs.h"
+
 .globl _start
 _start:
     cli
@@ -11,9 +13,9 @@ _start:
     movw $0x0, %ax
     movw %ax, %ds
     movw %ax, %ss
+    movw %ax, %es
 
-    // Stack will be placed at 0x7C00 + 0x2000 (twenty sectors after bootsector)
-    movw $0x9C00, %sp
+    movw $REALMODE_STACK, %sp
     sti
 
     movb %dl, boot_disk_number // Store it
@@ -26,26 +28,19 @@ _start:
     xorw %ax, %ax
     int $0x13
 
-    xorw %bx, %bx
-    movw %bx, %ds
-
     movb $2, %ah // Read from disk
-    movb $1, %al // One sector
+    movb $SECOND_STAGE_SECTORS, %al
     movb $0, %ch // Cylinder 0
     movb $2, %cl // Sector 2 (starts from 1)
     movb $0, %dh
 
-    // es:bx is the buffer address
-    xorw %bx, %bx
-    movw %bx, %es
-    movw $0x7E00, %bx 
+    movw $SECOND_STAGE, %bx 
 
     int $0x13
 
     jc .error // If CF is set, error
 
-    movw $0x7E00, %ax
-    jmp *%ax
+    jmp *%bx
 
 hang:
     jmp hang

@@ -1,5 +1,7 @@
 .code16
 
+#include "defs.h"
+
 second_stage:
     movw $0x07c0, %ax
     movw %ax, %ds
@@ -7,7 +9,11 @@ second_stage:
     movw $msg, %si
     call print_str
 
-    
+    // 1. Get the bootloader config
+    // 2. Get the memory map
+    // 3. Load the kernel
+    // 4. Enter protected mode
+    // 5. Transfer control to the kernel
 
 halt:
     hlt

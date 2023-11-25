@@ -1,3 +1,4 @@
 boot.img
 bin/**
-
+mkimage/zig-out/
+mkimage/zig-cache/
